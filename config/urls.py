@@ -4,8 +4,13 @@ from library.views import today_review, review_action
 from library.api import today_words_api
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("学习系统已运行")
 
 urlpatterns = [
+    path("", home),
     path('admin/', admin.site.urls),
 
     # 页面逻辑
