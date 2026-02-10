@@ -9,12 +9,15 @@ SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
-    "study-learning-system-production.up.railway.app",
+    "study-learning-system.onrender.com",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://study-learning-system-production.up.railway.app",
+    "https://study-learning-system.onrender.com",
 ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
@@ -133,3 +136,19 @@ if R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY and R2_ACCOUNT_ID:
     MEDIA_URL = f"https://{R2_BUCKET_NAME}.{R2_ACCOUNT_ID}.r2.cloudflarestorage.com/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+from django.contrib.auth import get_user_model
+
+if os.getenv("CREATE_SUPERUSER") == "True":
+    User = get_user_model()
+    if not User.objects.filter(username="admin").exists():
+        user = User(
+            username="admin",
+            email="admin@example.com",
+            is_staff=True,
+            is_superuser=True,
+        )
+        user.set_password("admin123")
+        user.save()
+
