@@ -133,6 +133,7 @@ AWS_S3_OBJECT_PARAMETERS = {
 
 if R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY and R2_ACCOUNT_ID:
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    MEDIA_URL = f"https://{R2_BUCKET_NAME}.{R2_ACCOUNT_ID}.r2.cloudflarestorage.com/"
+    MEDIA_URL = f"https://{R2_BUCKET_NAME}.r2.dev/"
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
