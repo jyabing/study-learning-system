@@ -136,19 +136,3 @@ if R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY and R2_ACCOUNT_ID:
     MEDIA_URL = f"https://{R2_BUCKET_NAME}.{R2_ACCOUNT_ID}.r2.cloudflarestorage.com/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-from django.contrib.auth import get_user_model
-
-if os.getenv("CREATE_SUPERUSER") == "True":
-    User = get_user_model()
-    if not User.objects.filter(username="admin").exists():
-        user = User(
-            username="admin",
-            email="admin@example.com",
-            is_staff=True,
-            is_superuser=True,
-        )
-        user.set_password("admin123")
-        user.save()
-
