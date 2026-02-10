@@ -36,8 +36,10 @@ INSTALLED_APPS = [
 
     'corsheaders',
     'rest_framework',
+    'storages',        # ← 加这一行
     'library',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
