@@ -10,20 +10,22 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
     "study-learning-system.onrender.com",
+    "127.0.0.1",
+    "localhost",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://study-learning-system.onrender.com",
 ]
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# ================= 生产环境安全（Render 才启用） =================
+DEBUG = True
 
+SECURE_PROXY_SSL_HEADER = None
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 
-if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # ================= 应用 =================
 INSTALLED_APPS = [

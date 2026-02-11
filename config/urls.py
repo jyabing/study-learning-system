@@ -1,8 +1,8 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.http import HttpResponse
 
-from library.views import today_review, review_action
+from library.views import today_review, review_action, train_next_api
 from library.api import today_words_api
 
 
@@ -24,4 +24,7 @@ urlpatterns = [
 
     # API 接口
     path("api/today_words/", today_words_api),
+    path("api/train/next/", train_next_api),# 
+    
+    path("api/", include("library.urls")),
 ]
