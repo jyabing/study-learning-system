@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
+from django.contrib.auth import views as auth_views
 
 from library.views import today_review, review_action, train_next_api
 from library.api import today_words_api
@@ -27,4 +28,6 @@ urlpatterns = [
     path("api/train/next/", train_next_api),# 
     
     path("api/", include("library.urls")),
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
+    
 ]

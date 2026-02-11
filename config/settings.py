@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'library',
 ]
 
+LOGIN_REDIRECT_URL = "/api/review/dashboard/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
