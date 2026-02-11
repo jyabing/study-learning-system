@@ -99,7 +99,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CORS_ALLOW_ALL_ORIGINS = True
 
 # =========================================================
-# ===============  Cloudflare R2 配置区域  =================
+# =============== Cloudflare R2 存储配置 ==================
 # =========================================================
 
 R2_ACCESS_KEY_ID = os.getenv("R2_ACCESS_KEY_ID")
@@ -108,12 +108,13 @@ R2_ACCOUNT_ID = os.getenv("R2_ACCOUNT_ID")
 
 R2_BUCKET_NAME = "study-mp3"
 
-# ⭐ 关键：Cloudflare R2 endpoint（不是 amazonaws）
+# ⭐ 正确的 R2 endpoint（绝对不能是 amazonaws）
 R2_ENDPOINT_URL = (
     f"https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
     if R2_ACCOUNT_ID else None
 )
 
+# boto3 映射到 R2
 AWS_ACCESS_KEY_ID = R2_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY = R2_SECRET_ACCESS_KEY
 AWS_STORAGE_BUCKET_NAME = R2_BUCKET_NAME
@@ -129,7 +130,7 @@ AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": "public, max-age=31536000",
 }
 
-# ⭐ 强制走 R2
+# ⭐ 有 R2 key 就强制走 R2
 if R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY and R2_ACCOUNT_ID:
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     MEDIA_URL = f"https://{R2_BUCKET_NAME}.r2.dev/"
