@@ -18,15 +18,6 @@ CSRF_TRUSTED_ORIGINS = [
     "https://study-learning-system.onrender.com",
 ]
 
-# ================= 生产环境安全（Render 才启用） =================
-DEBUG = True
-
-SECURE_PROXY_SSL_HEADER = None
-SECURE_SSL_REDIRECT = False
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-
-
 # ================= 应用 =================
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,7 +29,7 @@ INSTALLED_APPS = [
 
     'corsheaders',
     'rest_framework',
-    'storages',        # ← 加这一行
+    'storages',   # R2 必须
     'library',
 ]
 
@@ -104,24 +95,28 @@ USE_TZ = True
 # ================= 静态文件 =================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# ================= 媒体文件（默认本地） =================
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 # ================= CORS =================
 CORS_ALLOW_ALL_ORIGINS = True
 
-# ================= Cloudflare R2 =================
+# =========================================================
+# ===============  Cloudflare R2 关键区域  =================
+# =========================================================
+
 R2_ACCESS_KEY_ID = os.getenv("R2_ACCESS_KEY_ID")
 R2_SECRET_ACCESS_KEY = os.getenv("R2_SECRET_ACCESS_KEY")
 R2_ACCOUNT_ID = os.getenv("R2_ACCOUNT_ID")
 
 R2_BUCKET_NAME = "study-mp3"
-R2_ENDPOINT_URL = f"https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com" if R2_ACCOUNT_ID else None
 
+# R2 endpoint（不是 amazonaws）
+R2_ENDPOINT_URL = (
+    f"https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
+    if R2_ACCOUNT_ID else None
+)
+
+# boto3 映射到 R2
 AWS_ACCESS_KEY_ID = R2_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY = R2_SECRET_ACCESS_KEY
 AWS_STORAGE_BUCKET_NAME = R2_BUCKET_NAME
@@ -137,9 +132,12 @@ AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": "public, max-age=31536000",
 }
 
+# ⭐ 只要有 R2 key，就强制走 R2
 if R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY and R2_ACCOUNT_ID:
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     MEDIA_URL = f"https://{R2_BUCKET_NAME}.r2.dev/"
-
+else:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
