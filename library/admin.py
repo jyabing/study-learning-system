@@ -6,14 +6,14 @@ from .models import Book, Course, Word, MP3
 # ================= Book =================
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ("name",)
-    search_fields = ("name",)
+    list_display = ("title",)
+    search_fields = ("title",)
 
 
 # ================= Course =================
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ("name", "book")
+    list_display = ("name", "book")   # ⭐注意这里是 name
     list_filter = ("book",)
     search_fields = ("name",)
 
@@ -29,14 +29,18 @@ class MP3Inline(admin.TabularInline):
 class WordAdmin(admin.ModelAdmin):
 
     # 列表页显示
-    list_display = ("spelling", "course", "memory_level", "next_review_date")
+    list_display = (
+        "spelling",
+        "course",
+        "memory_level",
+        "next_review_date",
+    )
 
     list_filter = ("course",)
     search_fields = ("spelling", "meaning", "japanese", "korean")
     inlines = [MP3Inline]
 
-    # ⭐⭐ 关键 ⭐⭐
-    # 在编辑页面显示
+    # 在编辑页显示
     readonly_fields = ("memory_level", "next_review_date")
 
     fields = (
@@ -46,14 +50,14 @@ class WordAdmin(admin.ModelAdmin):
         "japanese",
         "korean",
         "example",
-        "theme",
-        "memory_level",        # ← 现在会显示
-        "next_review_date",    # ← 现在会显示
+        "category",
+        "memory_level",
+        "next_review_date",
     )
 
     def save_model(self, request, obj, form, change):
         """
-        新单词创建时自动初始化
+        新建单词时自动初始化
         """
         if not change:
             obj.memory_level = 0

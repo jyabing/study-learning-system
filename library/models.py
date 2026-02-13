@@ -3,6 +3,8 @@ from django.db import models
 from datetime import date, timedelta
 from .storages import R2MP3Storage
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 # ================== 书籍 ==================
@@ -39,10 +41,28 @@ class Word(models.Model):
     example = models.TextField("例句", blank=True)
     category = models.CharField("主题分类", max_length=50, blank=True, null=True)
 
+    # ⭐⭐⭐ 新增记忆字段 ⭐⭐⭐
+    memory_level = models.IntegerField(default=0)
+    next_review_date = models.DateField(default=timezone.now)
+
     created_at = models.DateTimeField("创建时间", auto_now_add=True)
 
     def __str__(self):
         return self.spelling
+    
+
+class WordProgress(models.Model):
+    word = models.OneToOneField(
+        Word,
+        on_delete=models.CASCADE,
+        related_name="progress"
+    )
+
+    memory_level = models.IntegerField(default=0)
+    next_review_date = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.word.spelling} - Lv{self.memory_level}"
 
 
 # ================== 单词记忆状态（核心SRS算法）==================
@@ -256,3 +276,8 @@ class TaskMemoryScheduler:
         return memory.next_review
 
 # ======== [END 新增 V2 调度算法核心函数] ========
+
+@receiver(post_save, sender=Word)
+def create_word_progress(sender, instance, created, **kwargs):
+    if created:
+        WordProgress.objects.create(word=instance)
