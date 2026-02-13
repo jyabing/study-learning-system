@@ -51,7 +51,7 @@ ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'DIRS': [],
+    'DIRS': [BASE_DIR / "study_system" / "templates"],
     'APP_DIRS': True,
     'OPTIONS': {
         'context_processors': [
@@ -93,6 +93,11 @@ USE_TZ = True
 # ================= 静态文件 =================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "study_system" / "static",   # ✅ 新增
+]
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ================= CORS =================
