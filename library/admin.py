@@ -51,6 +51,7 @@ class WordAdmin(admin.ModelAdmin):
         if not change:
             obj.memory_level = 0
             obj.next_review_date = timezone.now().date()
+
         super().save_model(request, obj, form, change)
 
 
