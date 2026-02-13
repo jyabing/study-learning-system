@@ -13,7 +13,7 @@ class BookAdmin(admin.ModelAdmin):
 # ================= Course =================
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ("name", "book")   # ⭐注意这里是 name
+    list_display = ("name", "book")
     list_filter = ("book",)
     search_fields = ("name",)
 
@@ -28,19 +28,11 @@ class MP3Inline(admin.TabularInline):
 @admin.register(Word)
 class WordAdmin(admin.ModelAdmin):
 
-    # 列表页显示
-    list_display = (
-        "spelling",
-        "course",
-        "memory_level",
-        "next_review_date",
-    )
-
+    list_display = ("spelling", "course", "memory_level", "next_review_date")
     list_filter = ("course",)
     search_fields = ("spelling", "meaning", "japanese", "korean")
     inlines = [MP3Inline]
 
-    # 在编辑页显示
     readonly_fields = ("memory_level", "next_review_date")
 
     fields = (
@@ -56,13 +48,9 @@ class WordAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        """
-        新建单词时自动初始化
-        """
         if not change:
             obj.memory_level = 0
             obj.next_review_date = timezone.now().date()
-
         super().save_model(request, obj, form, change)
 
 
