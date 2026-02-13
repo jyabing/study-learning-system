@@ -354,6 +354,7 @@ def _build_options_for_word(target_word, limit=4):
 
 
 @require_GET
+@login_required
 def train_next_api(request):
     """
     V2 调度优先的训练入口
@@ -381,7 +382,12 @@ def train_next_api(request):
         "recall": "write",
     }
     req_mode = request.GET.get("mode", "mix")
-    v2_mode = mode_map.get(req_mode, req_mode)
+
+    if req_mode == "mix":
+        v2_mode = random.choice(["listen", "choice", "fill", "write"])
+    else:
+        v2_mode = mode_map.get(req_mode, req_mode)
+
 
     # ========== V2 TaskMemory 调度 ==========
     memory_v2 = (
@@ -454,6 +460,7 @@ def train_next_api(request):
 
 @csrf_exempt
 @require_POST
+@login_required
 def train_submit_api(request):
     """
     POST /api/train/submit/
