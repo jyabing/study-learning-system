@@ -1,0 +1,22 @@
+.app-shell {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 手机优化 */
+@media (max-width: 640px) {
+  .app-shell {
+    padding: 14px;
+  }
+
+  .card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 14px;
+  }
+}

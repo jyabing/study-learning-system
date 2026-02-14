@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>今日复习</title>
+</head>
+<body>
+
+<h1>📅 今日复习单词</h1>
+
+{% if words %}
+<ul>
+
+{% for word in words %}
+<li style="margin-bottom:30px;">
+    <h2>{{ word.spelling }}</h2>
+    <p>含义：{{ word.meaning }}</p>
+    <p>例句：{{ word.example }}</p>
+
+    {% if word.mp3_files.all %}
+        <audio controls>
+            <source src="{{ word.mp3_files.first.audio.url }}" type="audio/mpeg">
+        </audio>
+    {% endif %}
+
+    <div style="margin-top:10px;">
+        <a href="/review/{{ word.id }}/remember/">
+            <button style="background:#4CAF50;color:white;padding:10px;">✔ 我记住了</button>
+        </a>
+
+        <a href="/review/{{ word.id }}/forget/">
+            <button style="background:#f44336;color:white;padding:10px;">✘ 我忘记了</button>
+        </a>
+    </div>
+</li>
+{% endfor %}
+
+</ul>
+{% else %}
+<p>今天没有需要复习的单词</p>
+{% endif %}
+
+</body>
+</html>

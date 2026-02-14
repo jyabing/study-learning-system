@@ -1,0 +1,68 @@
+study-system/
+│
+├─ frontend/                     # 听说体验核心
+│   ├─ public/
+│   ├─ src/
+│   │   ├─ audio/                # Web Audio 相关
+│   │   │   ├─ player.ts         # 播放 / A-B / gating
+│   │   │   ├─ recorder.ts       # 录音（Speak / 费曼）
+│   │   │   └─ rt.ts             # 反应时 RT 计时
+│   │   │
+│   │   ├─ features/
+│   │   │   ├─ listenRT/         # 听力反应训练
+│   │   │   ├─ afc/              # 2AFC / 4AFC
+│   │   │   ├─ gating/           # Gating 识别
+│   │   │   ├─ shadow/           # Shadow-RT（简化）
+│   │   │   └─ feynman/          # 费曼讲述区
+│   │   │
+│   │   ├─ pages/
+│   │   │   ├─ Home.tsx          # 今日任务
+│   │   │   ├─ Train.tsx         # 训练主流程
+│   │   │   ├─ Reaction.tsx      # 反应力训练
+│   │   │   └─ Feynman.tsx       # 讲述页
+│   │   │
+│   │   ├─ api/                  # 调用后端
+│   │   │   ├─ items.ts
+│   │   │   ├─ review.ts
+│   │   │   └─ sync.ts
+│   │   │
+│   │   ├─ store/                # 状态管理
+│   │   │   ├─ schedule.ts
+│   │   │   └─ session.ts
+│   │   │
+│   │   └─ main.tsx
+│   │
+│   └─ index.html
+│
+├─ backend/
+│   ├─ src/
+│   │   ├─ routes/
+│   │   │   ├─ items.ts          # 获取训练内容
+│   │   │   ├─ review.ts         # 提交训练结果
+│   │   │   ├─ reaction.ts       # RT / gating 结果
+│   │   │   ├─ feynman.ts        # 讲述提交
+│   │   │   └─ sync.ts           # 多设备同步
+│   │   │
+│   │   ├─ services/
+│   │   │   ├─ scheduler.ts      # SM-2 / FSRS + 快速循环
+│   │   │   ├─ scorer.ts         # auto / reaction / feynman
+│   │   │   └─ blind.ts          # 未来自我盲评
+│   │   │
+│   │   ├─ db/
+│   │   │   ├─ index.ts
+│   │   │   └─ schema.sql
+│   │   │
+│   │   └─ server.ts
+│   │
+│   └─ package.json
+│
+├─ media/                         # 原型期本地存储
+│   ├─ books/
+│   ├─ user_audio/
+│   └─ images/
+│
+├─ docs/
+│   ├─ learning-flow.md           # 记 → 忆 → 反应 → 讲述
+│   └─ thresholds.md              # RT / gate 判定标准
+│
+└─ README.md

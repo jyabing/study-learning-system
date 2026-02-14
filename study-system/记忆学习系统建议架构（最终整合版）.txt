@@ -1,0 +1,32 @@
+学习系统（study.example.com）
+│
+├─ 前端层（PWA：React + TS，电脑/iPad/手机）
+│   ├─ 今日任务：Failure Loop 优先 + Due Cards
+│   ├─ 训练区：Listen / Speak / Read / Write（word & sentence）
+│   ├─ 反应力训练区：Listen-RT｜Gating｜Go/No-Go｜2AFC｜Shadow-RT
+│   ├─ 盲评中心：未来自我盲评 + Gold 校准
+│   ├─ 费曼讲述区（Feynman Zone）
+│   └─ 内容管理：词书/单元/词条、音频上传、A-B 点编辑
+│
+├─ 应用层（Django + DRF：Core API）
+│   ├─ 用户体系（1〜n 人）
+│   ├─ 词书/条目/媒体 API
+│   ├─ 学习引擎（排程 + 失败队列）
+│   │    ├─ word/sentence 分流评分
+│   │    ├─ SM-2/FSRS/半衰期（H）驱动 due_ts
+│   │    ├─ Failure Loop（10/30/60）
+│   │    └─ Peer-Proxy（Auto + 盲评 + 共识）→ 影响间隔
+│   ├─ 同步 API（离线队列合并、幂等提交）
+│   └─ （可选）异步 Worker：转写/费曼评分/问答生成
+│
+├─ 数据层（PostgreSQL 推荐；MVP 可 SQLite）
+│   ├─ book / unit / item / media
+│   ├─ schedule（UNIQUE: user_id + item_id）
+│   ├─ attempt / review / blind_review（append-only）
+│   ├─ reaction_trial（append-only）
+│   └─ feynman_trial（append-only）
+│
+└─ 媒体层（对象存储：study-media）
+    ├─ /books/...         教材音频
+    ├─ /user_audio/...    口语录音 + 费曼讲述
+    └─ /images/...        插图

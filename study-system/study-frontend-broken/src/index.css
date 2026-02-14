@@ -1,0 +1,72 @@
+/* ================= 基础渲染优化保留 ================= */
+:root {
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* ===== 日式主题变量 ===== */
+  --bg-main: #f7f6f2;
+  --bg-sub: #ecebe6;
+  --paper: #fbfbf9;
+
+  --ink-main: #2f2f2f;
+  --ink-sub: #6b6b6b;
+  --line-soft: #e4e2dc;
+
+  --btn-main: #2f2f2f;
+  --btn-hover: #1f1f1f;
+}
+
+/* ================= 页面整体 ================= */
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--bg-main), var(--bg-sub));
+  color: var(--ink-main);
+}
+
+/* ================= 文字 ================= */
+
+h1, h2, h3 {
+  letter-spacing: 1px;
+}
+
+/* ================= 卡片系统 ================= */
+
+.card {
+  background: var(--paper);
+  border-radius: 18px;
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  padding: 24px;
+}
+
+/* ================= 按钮系统 ================= */
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-main {
+  background: var(--btn-main);
+  color: #fff;
+}
+
+.btn-main:hover {
+  background: var(--btn-hover);
+}
+
+.btn-soft {
+  background: #f1f1ef;
+  border: 1px solid var(--line-soft);
+  color: var(--ink-main);
+}
